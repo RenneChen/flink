@@ -26,6 +26,7 @@ import org.apache.flink.python.util.CompressionUtils;
 import org.apache.flink.python.util.PythonDependencyUtils;
 import org.apache.flink.util.ExceptionUtils;
 import org.apache.flink.util.FileUtils;
+import org.apache.flink.util.FlinkException;
 import org.apache.flink.util.NetUtils;
 import org.apache.flink.util.OperatingSystem;
 import org.apache.flink.util.Preconditions;
@@ -487,6 +488,14 @@ final class PythonEnvUtils {
                 .isPresent()) {
             capturedJavaException = pythonException;
         }
+    }
+
+    public static void setCustomException(Throwable exception) {
+        capturedJavaException = exception;
+    }
+
+    public static void setCustomException(String message) {
+        capturedJavaException = new FlinkException(message);
     }
 
     public static void shutdownPythonProcess(Process pythonProcess, long timeoutMillis) {
