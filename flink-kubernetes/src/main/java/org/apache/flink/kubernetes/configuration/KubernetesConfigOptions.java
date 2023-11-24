@@ -518,6 +518,50 @@ public class KubernetesConfigOptions {
                             "The node label whose value is the same as the node name. "
                                     + "Currently, this will only be used to set the node affinity of TM pods to avoid being scheduled on blocked nodes.");
 
+    public static final ConfigOption<Boolean> KUBERNETES_SERVICE_ENABLED =
+            key("kubernetes.service.enabled")
+                    .booleanType()
+                    .defaultValue(true)
+                    .withDescription("Whether to create kubernetes service for rest service.");
+
+    public static final ConfigOption<Boolean> KUBERNETES_HOST_PORT_ENABLED =
+            key("kubernetes.host-port.enabled")
+                    .booleanType()
+                    .defaultValue(false)
+                    .withDescription(
+                            "Whether to enable host port to expose JobManager rest service.");
+
+    public static final ConfigOption<String> KUBERNETES_HOST_PORT_ANNOTATION =
+            key("kubernetes.host-port.annotation")
+                    .stringType()
+                    .noDefaultValue()
+                    .withDescription(
+                            "Annotation to retrieve host port to expose JobManager rest service.");
+
+    public static final ConfigOption<Integer> KUBERNETES_POLL_POD_MAX_RETRIES =
+            key("kubernetes.poll-pod.max-retries")
+                    .intType()
+                    .defaultValue(30)
+                    .withDescription("Max retries to poll kubernetes pod.");
+
+    public static final ConfigOption<Integer> KUBERNETES_WAIT_POD_SCHEDULED_MAX_RETRIES =
+            key("kubernetes.wait-pod-scheduled.max-retries")
+                    .intType()
+                    .defaultValue(60)
+                    .withDescription("Max retries to wait kubernetes pod to be scheduled.");
+
+    public static final ConfigOption<Integer> KUBERNETES_CONNECTION_TIMEOUT =
+            key("kubernetes.connection-timeout")
+                    .intType()
+                    .defaultValue(10000)
+                    .withDescription("Kubernetes client connection timeout in ms.");
+
+    public static final ConfigOption<Integer> KUBERNETES_REQUEST_TIMEOUT =
+            key("kubernetes.request-timeout")
+                    .intType()
+                    .defaultValue(10000)
+                    .withDescription("Kubernetes client request timeout in ms.");
+
     private static String getDefaultFlinkImage() {
         // The default container image that ties to the exact needed versions of both Flink and
         // Scala.
