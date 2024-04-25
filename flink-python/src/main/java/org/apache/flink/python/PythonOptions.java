@@ -248,6 +248,10 @@ public class PythonOptions {
                                     + "Note that currently it still doesn't support to execute Python user-defined functions in `thread` mode in all places. "
                                     + "It will fall back to `process` mode in these cases.");
 
+    @Experimental
+    public static final ConfigOption<Map<String, String>> PYTHON_SYSTEM_ENV =
+            ConfigOptions.key("python.system.env").mapType().noDefaultValue();
+
     // ------------------------------------------------------------------------------------------
     // config options used for internal purpose
     // ------------------------------------------------------------------------------------------

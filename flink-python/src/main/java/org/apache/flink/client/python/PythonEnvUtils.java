@@ -71,6 +71,7 @@ import java.util.stream.Collectors;
 import static org.apache.flink.python.PythonOptions.PYTHON_ARCHIVES;
 import static org.apache.flink.python.PythonOptions.PYTHON_CLIENT_EXECUTABLE;
 import static org.apache.flink.python.PythonOptions.PYTHON_FILES;
+import static org.apache.flink.python.PythonOptions.PYTHON_SYSTEM_ENV;
 import static org.apache.flink.python.util.PythonDependencyUtils.FILE_DELIMITER;
 
 /** The util class help to prepare Python env and run the python process. */
@@ -479,6 +480,11 @@ final class PythonEnvUtils {
         // set env variable PYFLINK_GATEWAY_PORT for connecting of python gateway in python process.
         pythonEnv.systemEnv.put(
                 "PYFLINK_GATEWAY_PORT", String.valueOf(gatewayServer.getListeningPort()));
+        // set user-defined system env
+        Map<String, String> systemEnv = config.get(PYTHON_SYSTEM_ENV);
+        if (systemEnv != null) {
+            pythonEnv.systemEnv.putAll(systemEnv);
+        }
         // start the python process.
         return PythonEnvUtils.startPythonProcess(pythonEnv, commands, redirectToPipe);
     }

@@ -141,8 +141,12 @@ public final class PythonDriver {
             }
         } finally {
             PythonEnvUtils.setGatewayServer(null);
-            if (shutdownHook != null && Runtime.getRuntime().removeShutdownHook(shutdownHook)) {
-                shutdownHook.run();
+            try {
+                if (shutdownHook != null && Runtime.getRuntime().removeShutdownHook(shutdownHook)) {
+                    shutdownHook.run();
+                }
+            } catch (IllegalStateException e) {
+                LOG.warn("Shutdown in progress.");
             }
         }
     }
